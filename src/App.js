@@ -9,11 +9,21 @@ const messages = [
 
 function App() {
   const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
 
-  function increaseStep() { setStep(step + 1); }
-  function decreaseStep() { if (step > 1) setStep(step - 1); }
+  function handlePrevious() { if (step > 1) setStep((step) => step - 1); }
+  function handleNext() { if(step < 3) setStep((step) => step + 1); }
+  function handleClose() { setIsOpen((isOpen) => !isOpen); }
 
-  return (
+  return (  
+    <>
+    <button 
+      className="close"
+      onClick={handleClose}
+      >
+      &times;
+      </button>
+    { isOpen && (
       <div className="steps">
         <div className="numbers"> 
         <div className={`${step >= 1 ? "active" : ""}`}>1</div>
@@ -27,18 +37,21 @@ function App() {
       <div className="buttons">
         <button
          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-         onClick={decreaseStep}
+         onClick={handlePrevious}
         >
           previous
         </button>
         <button
          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-         onClick={increaseStep}
+         onClick={handleNext}
         >
           next
         </button>
       </div>
       </div>
+    )
+    }
+    </>
   );
 }
 
